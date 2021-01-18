@@ -28,7 +28,9 @@ def _convertToPython(value):
     value_type = type(value) 
     return_value = value 
     if str(value_type) in problem_types: 
-        return_value = list(value) 
+        list_value = list(value)
+        if list_value: return_value=list_value[0]
+        else:          return_value=np.nan
     return return_value
 
 
