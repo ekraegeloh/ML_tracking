@@ -45,8 +45,8 @@ if ('MC/' in rootfile_path) or ('MCntuple' in rootfile_path):
 else:
     ## Real tracker data
     tree=f.Get("trackAndTrackCalo/tree")
-    hasTrack='passTrackQuality'
-    hasDecayVertex='passDecayVertexQuality'
+    hasTrack='passCandidateQuality'
+    hasDecayVertex='hasDecayVertex'
     pValue='trackPValue'
 
 nEntries=tree.GetEntries()
@@ -61,9 +61,10 @@ for branch in branches:
 ## Iterate over entries
 for i in range(nEntries):
     tree.GetEntry(i)
-    if getattr(tree, hasTrack) and\
-       getattr(tree, hasDecayVertex) and\
-       getattr(tree, pValue)>0:
+#    if getattr(tree, hasTrack) and\
+#       getattr(tree, hasDecayVertex) and\
+#       getattr(tree, pValue)>0:
+    if getattr(tree, hasDecayVertex):
         for branch in branches:
             value = _convertToPython( getattr(tree, branch.GetName()) )
             data[branch.GetName()] += [ value ]
